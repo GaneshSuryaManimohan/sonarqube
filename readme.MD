@@ -36,9 +36,9 @@ java -version
     - ```bash sudo apt install postgresql postgresql-contrib -y ```
 
 * Enable, start, & status check of the database server: 
-    ```bash sudo systemctl enable postgresql ```
-    ```bash sudo systemctl start postgresql ```
-    ```bash sudo systemctl status postgresql ```
+   - ```bash sudo systemctl enable postgresql ```
+   - ```bash sudo systemctl start postgresql ```
+   - ```bash sudo systemctl status postgresql ```
 
 * Verify: psql --version
 
