@@ -13,26 +13,26 @@ Example (For ubuntu)
 ## 2️⃣ **Install Java**
 SonarQube 10 requires Java 17+.
 
-``` sudo apt install -y fontconfig openjdk-17-jdk ```
-``` java -version ```
+```sudo apt install -y fontconfig openjdk-17-jdk ```
+```java -version ```
 
 ---
 ## 3️⃣ Install PostgreSQL
 
 * Add PostgreSQL Repository
-    - ``` sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list' ```
+    - ```sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list' ```
 
 * Add the PostgreSQL signing key: 
-    - ```  wget -q https://www.postgresql.org/media/keys/ACCC4CF8.asc -O - | sudo apt-key add - ```
+    - ```wget -q https://www.postgresql.org/media/keys/ACCC4CF8.asc -O - | sudo apt-key add - ```
 
 
 * Install PostgreSQL
-    - ``` sudo apt install postgresql postgresql-contrib -y ```
+    - ```sudo apt install postgresql postgresql-contrib -y ```
 
 * Enable, start, & status check of the database server: 
    - ```sudo systemctl enable postgresql ```
-   - ``` sudo systemctl start postgresql ```
-   - ``` sudo systemctl status postgresql ```
+   - ```sudo systemctl start postgresql ```
+   - ```sudo systemctl status postgresql ```
 
 * Verify: psql --version
 
@@ -43,42 +43,42 @@ SonarQube 10 requires Java 17+.
 ```sudo -i -u postgres```
 
 * Create user and database:
-    1. Create User manimohan: ``` createuser manimohan ```
+    1. Create User manimohan: ```createuser manimohan ```
 
-    2. Log in to PostgreSQL: ```  psql ```
+    2. Log in to PostgreSQL: ```psql ```
 
     3. Set a password for the manimohan user. Use a strong password in place of your_password_here:
-        ```  ALTER USER ddsonar WITH ENCRYPTED PASSWORD 'your_password_here';```
+        ```ALTER USER ddsonar WITH ENCRYPTED PASSWORD 'your_password_here';```
 
     4. Create a SonarQube database and set the owner to manimohan:
-        ```  CREATE DATABASE mmsonarqube OWNER manimohan;```
+        ```CREATE DATABASE mmsonarqube OWNER manimohan;```
 
     5. Grant all the privileges on the mmsonarqube database to the manimohan user:
-        ```  GRANT ALL PRIVILEGES ON DATABASE mmsonarqube TO manimohan;```
+        ```GRANT ALL PRIVILEGES ON DATABASE mmsonarqube TO manimohan;```
     
-    6. To check the created database: ``` \l ```
+    6. To check the created database: ```\l ```
 
-    7. To check the created database user: ```  \du ```
+    7. To check the created database user: ```\du ```
 
-    8. Exit PostgreSQL: ```  \q ```
+    8. Exit PostgreSQL: ```\q ```
 
-    9. Return to your non-root sudo user account. ```  exit```
+    9. Return to your non-root sudo user account. ```exit```
 
 ---
 ## 5️⃣ Download and Install SonarQube
 
 * Install the zip utility, which is needed to unzip the SonarQube files
-    - ``` sudo apt install zip -y```
+    - ```sudo apt install zip -y```
 
 * Here we are installing the latest version of SonarQube 10.0 community edition (Free)
-    - ```  sudo wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-10.0.0.68432.zip ```
+    - ```sudo wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-10.0.0.68432.zip ```
 
 * Unzip the downloaded file:
-    - ```  sudo unzip sonarqube-10.0.0.68432.zip ``` 
+    - ```sudo unzip sonarqube-10.0.0.68432.zip ``` 
 
 * Move the unzipped files to /opt/sonarqube directory:
-    - ```  sudo mv sonarqube-10.0.0.68432 sonarqube ```
-    - ```  sudo mv sonarqube /opt/ ```
+    - ```sudo mv sonarqube-10.0.0.68432 sonarqube ```
+    - ```sudo mv sonarqube /opt/ ```
 
 ---
 ## 6️⃣ Create SonarQube Group and User
@@ -86,19 +86,19 @@ SonarQube 10 requires Java 17+.
 * Create a dedicated user and group for SonarQube, which can not run as the root user.
 
 * Create a sonar group:
-    - ```  sudo groupadd manimohan ```
+    - ```sudo groupadd manimohan ```
 
 * Create a sonar user and set /opt/sonarqube as the home directory.
-    - ```  sudo useradd -d /opt/sonarqube -g manimohan manimohan```
+    - ```sudo useradd -d /opt/sonarqube -g manimohan manimohan```
 
 * Grant the sonar user access to the /opt/sonarqube directory
-    - ```  sudo chown manimohan:manimohan /opt/sonarqube -R ```
+    - ```sudo chown manimohan:manimohan /opt/sonarqube -R ```
 
 ---
 ## 7️⃣ Configure SonarQube Database Connection
 
 * Edit the SonarQube configuration file:
-    - ```  sudo vi /opt/sonarqube/conf/sonar.properties ```
+    - ```sudo vi /opt/sonarqube/conf/sonar.properties ```
 
 * Find the following lines:
                 `#sonar.jdbc.username=`    
@@ -113,9 +113,9 @@ SonarQube 10 requires Java 17+.
     - Save and exit the file
 
 * Edit the sonar script file
-    - ```  sudo vi /opt/sonarqube/bin/linux-x86-64/sonar.sh```
+    - ```sudo vi /opt/sonarqube/bin/linux-x86-64/sonar.sh```
 
-    - Add the following line: ```  RUN_AS_USER=manimohan```
+    - Add the following line: ```RUN_AS_USER=manimohan```
 
     - Save and exit the file
 
@@ -124,7 +124,7 @@ SonarQube 10 requires Java 17+.
 ## 8️⃣ Setup Systemd service
 
 * Create a systemd service file to start SonarQube at system boot:
-    - ```  sudo vi /etc/systemd/system/sonar.service```
+    - ```sudo vi /etc/systemd/system/sonar.service```
 
     - Paste the following lines to the file:
         [Unit]
@@ -145,13 +145,13 @@ SonarQube 10 requires Java 17+.
     - Save and exit the file
 
 * Enable the SonarQube service to run at system startup:
-    - ```  sudo systemctl enable sonar ```
+    - ```sudo systemctl enable sonar```
 
 * Start the SonarQube service:
-    - ```  sudo systemctl start sonar ```
+    - ```sudo systemctl start sonar```
 
 * Check the service status:
-    - ```  sudo systemctl status sonar ```
+    - ```sudo systemctl status sonar```
 
 ---
 ## 9️⃣ Configure Kernel Parameters (Required for Elasticsearch)
@@ -159,7 +159,7 @@ SonarQube 10 requires Java 17+.
 SonarQube uses Elasticsearch to store its indices in an MMap FS directory. It requires some changes to the system defaults.
 
 * Edit the sysctl configuration file:
-    - ```  sudo vi /etc/sysctl.conf ```
+    - ```sudo vi /etc/sysctl.conf```
     
     - Add the following lines:
         vm.max_map_count=262144
@@ -169,7 +169,7 @@ SonarQube uses Elasticsearch to store its indices in an MMap FS directory. It re
 
 * Save and exit the file 
 
-* Reboot the system to apply the changes: ```  sudo reboot ```
+* Reboot the system to apply the changes: ```sudo reboot```
 
 ---
 ## 🔟 Access SonarQube Web Interface
