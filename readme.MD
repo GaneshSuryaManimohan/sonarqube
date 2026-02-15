@@ -146,7 +146,7 @@ LimitNPROC=4096
 WantedBy=multi-user.target
 ```
 
-    - Save and exit the file
+- Save and exit the file
 
 * Enable the SonarQube service to run at system startup:
     - ```sudo systemctl enable sonar```
