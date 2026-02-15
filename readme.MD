@@ -7,12 +7,14 @@ Example (For ubuntu)
     ssh -i helloworld.pem ubuntu@55.63.86.254
 ```
 
-1️⃣ **System Update**
+---
+## 1️⃣ **System Update**
 ```bash
 sudo apt update
 ```
 
-2️⃣ **Install Java**
+---
+## 2️⃣ **Install Java**
 SonarQube 10 requires Java 17+.
 
 ```bash
@@ -20,7 +22,8 @@ sudo apt install -y fontconfig openjdk-17-jdk
 java -version
 ```
 
-3️⃣ Install PostgreSQL
+---
+## 3️⃣ Install PostgreSQL
 
 * Add PostgreSQL Repository
 ```bash
@@ -38,7 +41,8 @@ sudo systemctl status postgresql
 ```
 * Verify: psql --version
 
-4️⃣ Configure Database for SonarQube
+---
+## 4️⃣ Configure Database for SonarQube
 
 * Switch to postgres user:
 ```bash
@@ -67,7 +71,8 @@ sudo -i -u postgres
 
     9. Return to your non-root sudo user account. ```bash  exit```
 
-5️⃣ Download and Install SonarQube
+---
+## 5️⃣ Download and Install SonarQube
 
 * Install the zip utility, which is needed to unzip the SonarQube files
     - ```bash sudo apt install zip -y```
@@ -82,7 +87,8 @@ sudo -i -u postgres
     - ```bash  sudo mv sonarqube-10.0.0.68432 sonarqube ```
     - ```bash  sudo mv sonarqube /opt/ ```
 
-6️⃣ Create SonarQube Group and User
+---
+## 6️⃣ Create SonarQube Group and User
 
 * Create a dedicated user and group for SonarQube, which can not run as the root user.
 
@@ -95,7 +101,8 @@ sudo -i -u postgres
 * Grant the sonar user access to the /opt/sonarqube directory
     - ```bash  sudo chown manimohan:manimohan /opt/sonarqube -R ```
 
-7️⃣ Configure SonarQube Database Connection
+---
+## 7️⃣ Configure SonarQube Database Connection
 
 * Edit the SonarQube configuration file:
     - ```bash  sudo vi /opt/sonarqube/conf/sonar.properties ```
@@ -119,7 +126,9 @@ sudo -i -u postgres
 
     - Save and exit the file
 
-8️⃣ Setup Systemd service
+---
+
+## 8️⃣ Setup Systemd service
 
 * Create a systemd service file to start SonarQube at system boot:
     - ```bash  sudo vi /etc/systemd/system/sonar.service```
@@ -151,7 +160,8 @@ sudo -i -u postgres
 * Check the service status:
     - ```bash  sudo systemctl status sonar ```
 
-9️⃣ Configure Kernel Parameters (Required for Elasticsearch)
+---
+## 9️⃣ Configure Kernel Parameters (Required for Elasticsearch)
 
 SonarQube uses Elasticsearch to store its indices in an MMap FS directory. It requires some changes to the system defaults.
 
@@ -179,7 +189,7 @@ Note: the default username and password are admin and admin respectively.
 * Change the Old password with a New one:
     - Log in with username admin and password admin. 
     - In the next step, SonarQube will prompt you to change your password. CHANGE THE PASSWORD.
-
+---
 
 
 
