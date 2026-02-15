@@ -26,19 +26,20 @@ java -version
 ## 3️⃣ Install PostgreSQL
 
 * Add PostgreSQL Repository
-```bash
-sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
-wget -q https://www.postgresql.org/media/keys/ACCC4CF8.asc -O - | sudo apt-key add -
-sudo apt update
-```
+    - ```bash sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list' ```
+
+* Add the PostgreSQL signing key: 
+    - ```bash  wget -q https://www.postgresql.org/media/keys/ACCC4CF8.asc -O - | sudo apt-key add - ```
+
 
 * Install PostgreSQL
-```bash
-sudo apt install postgresql postgresql-contrib -y
-sudo systemctl enable postgresql
-sudo systemctl start postgresql
-sudo systemctl status postgresql
-```
+    - ```bash sudo apt install postgresql postgresql-contrib -y ```
+
+* Enable, start, & status check of the database server: 
+    ```bash sudo systemctl enable postgresql ```
+    ```bash sudo systemctl start postgresql ```
+    ```bash sudo systemctl status postgresql ```
+
 * Verify: psql --version
 
 ---
