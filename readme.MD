@@ -48,7 +48,7 @@ Example (For ubuntu)
     2. Log in to PostgreSQL: ```psql ```
 
     3. Set a password for the manimohan user. Use a strong password in place of your_password_here:
-        ```ALTER USER ddsonar WITH ENCRYPTED PASSWORD 'your_password_here';```
+        ```ALTER USER manimohan WITH ENCRYPTED PASSWORD 'your_password_here';```
 
     4. Create a SonarQube database and set the owner to manimohan:
         ```CREATE DATABASE mmsonarqube OWNER manimohan;```
@@ -127,20 +127,24 @@ Example (For ubuntu)
     - ```sudo vi /etc/systemd/system/sonar.service```
 
     - Paste the following lines to the file:
-        [Unit]
-        Description=SonarQube service
-        After=syslog.target network.target
-        [Service]
-        Type=forking
-        ExecStart=/opt/sonarqube/bin/linux-x86-64/sonar.sh start
-        ExecStop=/opt/sonarqube/bin/linux-x86-64/sonar.sh stop
-        User=manimohan
-        Group=manimohan
-        Restart=always
-        LimitNOFILE=65536
-        LimitNPROC=4096
-        [Install]
-        WantedBy=multi-user.target
+```ini
+[Unit]
+Description=SonarQube service
+After=syslog.target network.target
+
+[Service]
+Type=forking
+ExecStart=/opt/sonarqube/bin/linux-x86-64/sonar.sh start
+ExecStop=/opt/sonarqube/bin/linux-x86-64/sonar.sh stop
+User=manimohan
+Group=manimohan
+Restart=always
+LimitNOFILE=65536
+LimitNPROC=4096
+
+[Install]
+WantedBy=multi-user.target
+```
 
     - Save and exit the file
 
