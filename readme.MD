@@ -166,10 +166,12 @@ SonarQube uses Elasticsearch to store its indices in an MMap FS directory. It re
     - ```sudo vi /etc/sysctl.conf```
     
     - Add the following lines:
-        vm.max_map_count=262144
-        fs.file-max=65536
-        ulimit -n 65536
-        ulimit -u 4096
+```ini 
+vm.max_map_count=262144
+fs.file-max=65536
+ulimit -n 65536
+ulimit -u 4096
+```
 
 * Save and exit the file 
 
