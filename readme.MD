@@ -34,7 +34,7 @@ Example (For ubuntu)
    - ```sudo systemctl start postgresql ```
    - ```sudo systemctl status postgresql ```
 
-* Verify: psql --version
+* Verify: ```psql --version```
 
 ---
 ## 4️⃣ Configure Database for SonarQube
