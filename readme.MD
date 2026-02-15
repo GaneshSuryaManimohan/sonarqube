@@ -186,8 +186,8 @@ ulimit -u 4096
 Note: the default username and password are admin and admin respectively.
 
 * Change the Old password with a New one:
-    - Log in with username admin and password admin. 
-    - In the next step, SonarQube will prompt you to change your password. CHANGE THE PASSWORD.
+    - Log in with username **admin** and password **admin**. 
+    - In the next step, SonarQube will prompt you to change your password. **CHANGE THE PASSWORD**.
 ---
 
 
