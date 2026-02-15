@@ -11,11 +11,10 @@ Example (For ubuntu)
 
 ---
 ## 2️⃣ **Install Java**
-SonarQube 10 requires Java 17+.
 
-- ```sudo apt install -y fontconfig openjdk-17-jdk ```
-
-- ```java -version ```
+* SonarQube 10 requires Java 17+:
+    - ```sudo apt install -y fontconfig openjdk-17-jdk ```
+    - ```java -version ```
 
 ---
 ## 3️⃣ Install PostgreSQL
