@@ -3,42 +3,36 @@
 **SSH into the AWS EC2 Ubuntu Server:**
 
 Example (For ubuntu)
-```bash
-    ssh -i helloworld.pem ubuntu@55.63.86.254
-```
+```ssh -i helloworld.pem ubuntu@55.63.86.254 ```
 
 ---
 ## 1️⃣ **System Update**
-```bash
-sudo apt update
-```
+``` sudo apt update ```
 
 ---
 ## 2️⃣ **Install Java**
 SonarQube 10 requires Java 17+.
 
-```bash
-sudo apt install -y fontconfig openjdk-17-jdk
-java -version
-```
+``` sudo apt install -y fontconfig openjdk-17-jdk ```
+``` java -version ```
 
 ---
 ## 3️⃣ Install PostgreSQL
 
 * Add PostgreSQL Repository
-    - ```bash sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list' ```
+    - ``` sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list' ```
 
 * Add the PostgreSQL signing key: 
-    - ```bash  wget -q https://www.postgresql.org/media/keys/ACCC4CF8.asc -O - | sudo apt-key add - ```
+    - ```  wget -q https://www.postgresql.org/media/keys/ACCC4CF8.asc -O - | sudo apt-key add - ```
 
 
 * Install PostgreSQL
-    - ```bash sudo apt install postgresql postgresql-contrib -y ```
+    - ``` sudo apt install postgresql postgresql-contrib -y ```
 
 * Enable, start, & status check of the database server: 
-   - ```bash sudo systemctl enable postgresql ```
-   - ```bash sudo systemctl start postgresql ```
-   - ```bash sudo systemctl status postgresql ```
+   - ```sudo systemctl enable postgresql ```
+   - ``` sudo systemctl start postgresql ```
+   - ``` sudo systemctl status postgresql ```
 
 * Verify: psql --version
 
@@ -46,47 +40,45 @@ java -version
 ## 4️⃣ Configure Database for SonarQube
 
 * Switch to postgres user:
-```bash
-sudo -i -u postgres
-```
+```sudo -i -u postgres```
 
 * Create user and database:
-    1. Create User manimohan: ```bash createuser manimohan ```
+    1. Create User manimohan: ``` createuser manimohan ```
 
-    2. Log in to PostgreSQL: ```bash  psql ```
+    2. Log in to PostgreSQL: ```  psql ```
 
     3. Set a password for the manimohan user. Use a strong password in place of your_password_here:
-        ```bash  ALTER USER ddsonar WITH ENCRYPTED PASSWORD 'your_password_here';```
+        ```  ALTER USER ddsonar WITH ENCRYPTED PASSWORD 'your_password_here';```
 
     4. Create a SonarQube database and set the owner to manimohan:
-        ```bash  CREATE DATABASE mmsonarqube OWNER manimohan;```
+        ```  CREATE DATABASE mmsonarqube OWNER manimohan;```
 
     5. Grant all the privileges on the mmsonarqube database to the manimohan user:
-        ```bash  GRANT ALL PRIVILEGES ON DATABASE mmsonarqube TO manimohan;```
+        ```  GRANT ALL PRIVILEGES ON DATABASE mmsonarqube TO manimohan;```
     
-    6. To check the created database: ```bash \l ```
+    6. To check the created database: ``` \l ```
 
-    7. To check the created database user: ```bash  \du ```
+    7. To check the created database user: ```  \du ```
 
-    8. Exit PostgreSQL: ```bash  \q ```
+    8. Exit PostgreSQL: ```  \q ```
 
-    9. Return to your non-root sudo user account. ```bash  exit```
+    9. Return to your non-root sudo user account. ```  exit```
 
 ---
 ## 5️⃣ Download and Install SonarQube
 
 * Install the zip utility, which is needed to unzip the SonarQube files
-    - ```bash sudo apt install zip -y```
+    - ``` sudo apt install zip -y```
 
 * Here we are installing the latest version of SonarQube 10.0 community edition (Free)
-    - ```bash  sudo wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-10.0.0.68432.zip ```
+    - ```  sudo wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-10.0.0.68432.zip ```
 
 * Unzip the downloaded file:
-    - ```bash  sudo unzip sonarqube-10.0.0.68432.zip ``` 
+    - ```  sudo unzip sonarqube-10.0.0.68432.zip ``` 
 
 * Move the unzipped files to /opt/sonarqube directory:
-    - ```bash  sudo mv sonarqube-10.0.0.68432 sonarqube ```
-    - ```bash  sudo mv sonarqube /opt/ ```
+    - ```  sudo mv sonarqube-10.0.0.68432 sonarqube ```
+    - ```  sudo mv sonarqube /opt/ ```
 
 ---
 ## 6️⃣ Create SonarQube Group and User
@@ -94,19 +86,19 @@ sudo -i -u postgres
 * Create a dedicated user and group for SonarQube, which can not run as the root user.
 
 * Create a sonar group:
-    - ```bash  sudo groupadd manimohan ```
+    - ```  sudo groupadd manimohan ```
 
 * Create a sonar user and set /opt/sonarqube as the home directory.
-    - ```bash  sudo useradd -d /opt/sonarqube -g manimohan manimohan```
+    - ```  sudo useradd -d /opt/sonarqube -g manimohan manimohan```
 
 * Grant the sonar user access to the /opt/sonarqube directory
-    - ```bash  sudo chown manimohan:manimohan /opt/sonarqube -R ```
+    - ```  sudo chown manimohan:manimohan /opt/sonarqube -R ```
 
 ---
 ## 7️⃣ Configure SonarQube Database Connection
 
 * Edit the SonarQube configuration file:
-    - ```bash  sudo vi /opt/sonarqube/conf/sonar.properties ```
+    - ```  sudo vi /opt/sonarqube/conf/sonar.properties ```
 
 * Find the following lines:
                 `#sonar.jdbc.username=`    
@@ -121,9 +113,9 @@ sudo -i -u postgres
     - Save and exit the file
 
 * Edit the sonar script file
-    - ```bash  sudo vi /opt/sonarqube/bin/linux-x86-64/sonar.sh```
+    - ```  sudo vi /opt/sonarqube/bin/linux-x86-64/sonar.sh```
 
-    - Add the following line: ```bash  RUN_AS_USER=manimohan```
+    - Add the following line: ```  RUN_AS_USER=manimohan```
 
     - Save and exit the file
 
@@ -132,7 +124,7 @@ sudo -i -u postgres
 ## 8️⃣ Setup Systemd service
 
 * Create a systemd service file to start SonarQube at system boot:
-    - ```bash  sudo vi /etc/systemd/system/sonar.service```
+    - ```  sudo vi /etc/systemd/system/sonar.service```
 
     - Paste the following lines to the file:
         [Unit]
@@ -153,13 +145,13 @@ sudo -i -u postgres
     - Save and exit the file
 
 * Enable the SonarQube service to run at system startup:
-    - ```bash  sudo systemctl enable sonar ```
+    - ```  sudo systemctl enable sonar ```
 
 * Start the SonarQube service:
-    - ```bash  sudo systemctl start sonar ```
+    - ```  sudo systemctl start sonar ```
 
 * Check the service status:
-    - ```bash  sudo systemctl status sonar ```
+    - ```  sudo systemctl status sonar ```
 
 ---
 ## 9️⃣ Configure Kernel Parameters (Required for Elasticsearch)
@@ -167,7 +159,7 @@ sudo -i -u postgres
 SonarQube uses Elasticsearch to store its indices in an MMap FS directory. It requires some changes to the system defaults.
 
 * Edit the sysctl configuration file:
-    - ```bash  sudo vi /etc/sysctl.conf ```
+    - ```  sudo vi /etc/sysctl.conf ```
     
     - Add the following lines:
         vm.max_map_count=262144
@@ -177,7 +169,7 @@ SonarQube uses Elasticsearch to store its indices in an MMap FS directory. It re
 
 * Save and exit the file 
 
-* Reboot the system to apply the changes: ```bash  sudo reboot ```
+* Reboot the system to apply the changes: ```  sudo reboot ```
 
 ---
 ## 🔟 Access SonarQube Web Interface
